@@ -29,6 +29,7 @@ var delstack = [];
             ;
 var pel;
 var pos;
+var scale = 30;
 function levelselect(){
 	var i, o = "";
 	for(i in levelset){
@@ -39,21 +40,21 @@ function levelselect(){
 	 var canvas;
 var width;
 var height;
-var pwidth// = width/30;
-var pheight// = height/30;
+var pwidth// = width/scale;
+var pheight// = height/scale;
          var canvasPosition;// = getElementPosition(canvas);
       function init() {
 canvas = document.getElementById("canvas");
          canvasPosition = getElementPosition(canvas);
 width = canvas.width;
 height = canvas.height;
-pwidth = width/30;
-pheight = height/30;
+pwidth = width/scale;
+pheight = height/scale;
 	 loadLevel(0);
 	levelselect();
 	 var debugDraw = new b2DebugDraw();
 	debugDraw.SetSprite(document.getElementById("canvas").getContext("2d"));
-	debugDraw.SetDrawScale(30.0);
+	debugDraw.SetDrawScale(scale);
 	debugDraw.SetFillAlpha(0.6);
 	debugDraw.SetLineThickness(1.0);
 	debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
@@ -100,7 +101,7 @@ var fps = 30;
 		var i;
 		var o = [];
 		for(i in a){
-			o.push(cbox(a[i][0] ? blue : red, a[i][1] + width/60, a[i][2]+1, a[i][3], a[i][4]));
+			o.push(cbox(a[i][0] ? blue : red, a[i][1] + width/(scale*2), a[i][2]+1, a[i][3], a[i][4]));
 			blcnt += a[i][0] ? 1 : 0;
 		}
 		return o;
@@ -151,8 +152,8 @@ function shapes(){
          }, true);
          
          function handleMouseMove(e) {
-            mouseX = (e.clientX - canvasPosition.x) / 30;
-            mouseY = (e.clientY - canvasPosition.y) / 30;
+            mouseX = (e.clientX - canvasPosition.x) / scale;
+            mouseY = (e.clientY - canvasPosition.y) / scale;
          };
          
 
