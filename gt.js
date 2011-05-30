@@ -248,6 +248,7 @@ var d = new Date();
 		  points += computePoints(fix);
 		  _deleteFixture(fix);
                }
+		isMouseDown = false;
 
             }
 	       var fbody = getFallenBody();
