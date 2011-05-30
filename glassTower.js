@@ -14,7 +14,7 @@ var delstack = [];
             ;
 var pel;
 var pos;
-var scale = 30;
+var scale;
 function levelselect(){
 	var i, o = "";
 	for(i in levelset){
@@ -31,8 +31,11 @@ var pheight// = height/scale;
       function init() {
 canvas = document.getElementById("canvas");
          canvasPosition = getElementPosition(canvas);
-width = canvas.width;
-height = canvas.height;
+      height = window.innerHeight - 16;
+      width = height * 2/3;
+	scale = height/10;
+canvas.width = width;
+canvas.height = height;
 pwidth = width/scale;
 pheight = height/scale;
 	 loadLevel(0);
@@ -138,7 +141,7 @@ function shapes(){
          
          function handleMouseMove(e) {
             mouseX = (e.clientX - canvasPosition.x) / scale;
-            mouseY = (e.clientY - canvasPosition.y) / scale;
+            mouseY = (e.clientY - (canvasPosition.y - window.pageYOffset)) / scale;
          };
          
 
