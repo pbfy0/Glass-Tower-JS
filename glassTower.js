@@ -138,13 +138,25 @@ function shapes(){
             mouseX = undefined;
             mouseY = undefined;
          }, true);
+         document.addEventListener("touchstart", function() {
+            isMouseDown = true;
+            handleTouchStart(e);
+         }, true); 
+         document.addEventListener("touchend", function() {
+            isMouseDown = false;
+            mouseX = undefined;
+            mouseY = undefined;
+         }, true);
+
          
          function handleMouseMove(e) {
             mouseX = (e.clientX - canvasPosition.x) / scale;
             mouseY = (e.clientY - (canvasPosition.y - window.pageYOffset)) / scale;
          };
-         
-
+	function handleTouchStart(e){
+         mouseX = (e.targetTouches[0].clientX - canvasPosition.x) / scale;
+         mouseY = (e.targetTouches[0].clientY - (canvasPosition.y - window.pageYOffset)) / scale;
+	}
 
          function getBodyCB(fixture) {
             if(fixture.GetBody().GetType() != b2Body.b2_staticBody) {
@@ -282,7 +294,7 @@ var d = new Date();
 		setTimeout(shapes, 200);
 		}
 		lock=false;
-		console.log(delstack);
+//		console.log(delstack);
 	}
 	if(fllflag){
 		fllflag=false;
