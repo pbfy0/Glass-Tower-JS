@@ -89,7 +89,7 @@ var fps = 30;
 		var i;
 		var o = [];
 		for(i in a){
-			o.push(cbox(a[i][0] ? blue : red, a[i][1] + width/(scale*2), a[i][2]+1, a[i][3], a[i][4]));
+			o.push(cbox(a[i][0] ? blue : red, a[i][1] + width/(scale*2), a[i][2]+0.5, a[i][3], a[i][4]));
 			blcnt += a[i][0] ? 1 : 0;
 		}
 		return o;

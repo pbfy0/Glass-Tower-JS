@@ -39,6 +39,15 @@ levelset = [
 	[true, -1.6, 3, wdth, hght],
 	[false, -0.6, 3, wdth, hght],
 	[true, 0.4, 3, wdth, hght],
-	[false, 1.4, 3, wdth, hght]]
+	[false, 1.4, 3, wdth, hght]],
+	[5,
+	[true, 0, 0, 1, 1],
+	[false, -0.5, 1, 1, 1],
+	[false, 0.5, 1, 1, 1],
+	[false, -1, 2, 1, 1],
+	[false, 0, 2, 1, 1],
+	[false, 1, 2, 1, 1],
+	[true, 0, 4, 3, 3],
+	[false, 0.5, 5.5, 3, 1]]
 	
 ]	
