@@ -35,8 +35,10 @@ var
                s = f.GetShape();
 	       ud = f.GetUserData();
 	       if(ud !== null){
-	       col = f.GetUserData().color;
-               color.Set(col.r/255, col.g/255, col.b/255);
+		if(ud.color !== undefined){
+	         col = ud.color;
+                 color.Set(col.r/255, col.g/255, col.b/255);
+		}
 	       }
                else if (b.IsActive() == false) {
                   color.Set(0.5, 0.5, 0.3);
