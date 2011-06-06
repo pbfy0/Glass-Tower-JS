@@ -27,9 +27,11 @@ var width;
 var height;
 var pwidth// = width/scale;
 var pheight// = height/scale;
+var reverse;
          var canvasPosition;// = getElementPosition(canvas);
       function init() {
 canvas = document.getElementById("canvas");
+reverse = document.getElementById("reverse");
          canvasPosition = getElementPosition(canvas);
       height = window.innerHeight - 16;
       width = height * 2/3;
@@ -238,6 +240,7 @@ var fllflag = false;
 function computePoints(fix){
 		  var fud = fix.GetUserData();
 		  var isblue = (fud.color == blue);
+		  if(reverse.checked){isblue = !isblue}
 		  blcnt -= isblue ? 1 : 0;
 		  var pd = (isblue ? 10 : -10) * fud.area;
 		  return pd;
