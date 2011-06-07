@@ -149,20 +149,21 @@ function shapes(){
          }, true);
          document.addEventListener("touchstart", function() {
             isMouseDown = true;
-            handleTouchStart(e);
+//            handleTouchStart(e);
          }, true); 
          document.addEventListener("touchend", function() {
             isMouseDown = false;
             mouseX = undefined;
             mouseY = undefined;
          }, true);
+	 document.addEventListener("touchmove", handleTouchMove, true);
 
          
          function handleMouseMove(e) {
             mouseX = (e.pageX - canvasPosition.x) / scale;
             mouseY = (e.pageY - canvasPosition.y) / scale;
          };
-	function handleTouchStart(e){
+	function handleTouchMove(e){
          mouseX = (e.targetTouches[0].pageX - canvasPosition.x) / scale;
          mouseY = (e.targetTouches[0].pageY - canvasPosition.y) / scale;
 	}
