@@ -28,6 +28,7 @@ var height;
 var pwidth// = width/scale;
 var pheight// = height/scale;
 var reverse;
+var reversed;
          var canvasPosition;// = getElementPosition(canvas);
       function init() {
 canvas = document.getElementById("canvas");
@@ -65,6 +66,9 @@ var fps = 30;
             ,  true                 //allow sleep
          );
 
+function XOR(a, b){
+	return !!((a ? 1 : 0) ^ (b ? 1 : 0));
+}
          
          var fixDef = new b2FixtureDef;
          fixDef.density = 1.0;
@@ -88,11 +92,14 @@ var fps = 30;
 	 cwidth = inp.shift() / 2;
 	 cpos = pwidth/2;
 	 diff = pheight-2/15;
+	 reversed = reverse.checked;
 		var i;
 		var o = [];
 		for(i in a){
-			o.push(cbox(a[i][0] ? blue : red, a[i][1] + width/(scale*2), a[i][2]+0.5, a[i][3], a[i][4]));
-			blcnt += a[i][0] ? 1 : 0;
+			var c = XOR(reversed, a[i][0]);
+			o.push(cbox(c ? blue : red, a[i][1] + width/(scale*2), a[i][2]+0.5, a[i][3], a[i][4]));
+//			if(reversed){a[i][0] = !a[i][0]}
+			blcnt += c ? 1 : 0;
 		}
 		return o;
 	 }
@@ -240,7 +247,7 @@ var fllflag = false;
 function computePoints(fix){
 		  var fud = fix.GetUserData();
 		  var isblue = (fud.color == blue);
-		  if(reverse.checked){isblue = !isblue}
+//		  if(reversed){isblue = !isblue}
 		  blcnt -= isblue ? 1 : 0;
 		  var pd = (isblue ? 10 : -10) * fud.area;
 		  return pd;
