@@ -159,12 +159,12 @@ function shapes(){
 
          
          function handleMouseMove(e) {
-            mouseX = (e.clientX - canvasPosition.x) / scale;
-            mouseY = (e.clientY - (canvasPosition.y - window.pageYOffset)) / scale;
+            mouseX = (e.pageX - canvasPosition.x) / scale;
+            mouseY = (e.pageY - canvasPosition.y) / scale;
          };
 	function handleTouchStart(e){
-         mouseX = (e.targetTouches[0].clientX - canvasPosition.x) / scale;
-         mouseY = (e.targetTouches[0].clientY - (canvasPosition.y - window.pageYOffset)) / scale;
+         mouseX = (e.targetTouches[0].pageX - canvasPosition.x) / scale;
+         mouseY = (e.targetTouches[0].pageY - canvasPosition.y) / scale;
 	}
 
          function getBodyCB(fixture) {
