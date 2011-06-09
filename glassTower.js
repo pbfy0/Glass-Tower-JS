@@ -1,3 +1,4 @@
+soundManager.url = "SoundManager2/swf/";
 var delstack = [];
          var   b2Vec2 = Box2D.Common.Math.b2Vec2
             ,  b2AABB = Box2D.Collision.b2AABB
@@ -53,7 +54,11 @@ pheight = height/scale;
          window.setInterval(update, 1000 / fps);
          pel = document.getElementById("points");
 	}
-
+var sn = 0;
+function smash(){
+	soundManager.play("smash" + sn, "smash.ogg");
+	sn++;
+}
       var l = 0;
       var inp = levelset[l];
 	var points = 0;
@@ -67,7 +72,7 @@ var fps = 30;
          );
 
 function XOR(a, b){
-	return !!((a ? 1 : 0) ^ (b ? 1 : 0));
+	return !!(!!a != !!b);
 }
          
          var fixDef = new b2FixtureDef;
@@ -273,6 +278,7 @@ var d = new Date();
 		  var fix = body.GetFixtureList();
 		  points += computePoints(fix);
 		  _deleteFixture(fix);
+		 smash();
                }
 		isMouseDown = false;
 
@@ -283,6 +289,7 @@ var d = new Date();
 		  var fix = fbody.GetFixtureList();
 		  points += computePoints(fix);
 		  _deleteFixture(fix);
+		 smash();
 		}
             
          pel.innerHTML = points;
