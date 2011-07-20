@@ -4,7 +4,7 @@ var wdth = 1;
 var hght = 1;
 
 levelset = [
-	[5,  // width of base
+/*	[5,  // width of base
 	[true, -2, 0, 1, 1], // true -> blue, xpos, ypos, width, height
 	[true, -1, 0, 1, 1],
 	[false, 0, 0, 1, 1],
@@ -20,7 +20,7 @@ levelset = [
 	[true, -0.5, 3, 1, 1],
 	[true, 0.5, 3, 1, 1],
 	[true, 0, 4, 1, 1],
-	[false, 0, 5, 1, 1]],
+	[false, 0, 5, 1, 1]],*/
 //	[4,
 //	[true, 0, 0, 1, 1]],
 	[5,

@@ -84,8 +84,8 @@ function XOR(a, b){
 	 function rgb(rc, gc, bc){
 		return {r:rc,g:gc,b:bc};
 	 }
-	 var red = rgb(255, 0, 0);
-	 var blue = rgb(0, 0, 255);
+	 var blue = rgb(0, 255, 0);
+	 var red = rgb(255, 0, 255);
 	 var cwidth = 0, cpos, diff;
 	 var blcnt = 0;
 	 function shp(a){
@@ -147,16 +147,19 @@ function shapes(){
             mouseX = undefined;
             mouseY = undefined;
          }, true);
-         document.addEventListener("touchstart", function() {
+         document.addEventListener("touchstart", function(event) {
             isMouseDown = true;
+	    handleTouchMove(event);
+//	    event.preventDefault();
 //            handleTouchStart(e);
          }, true); 
-         document.addEventListener("touchend", function() {
+         document.addEventListener("touchend", function(event) {
             isMouseDown = false;
             mouseX = undefined;
             mouseY = undefined;
+//            event.preventDefault();
          }, true);
-	 document.addEventListener("touchmove", handleTouchMove, true);
+//	 document.addEventListener("touchmove", handleTouchMove, true);
 
          
          function handleMouseMove(e) {
@@ -164,8 +167,11 @@ function shapes(){
             mouseY = (e.pageY - canvasPosition.y) / scale;
          };
 	function handleTouchMove(e){
+//	alert(e.touches.length);
          mouseX = (e.targetTouches[0].pageX - canvasPosition.x) / scale;
          mouseY = (e.targetTouches[0].pageY - canvasPosition.y) / scale;
+            e.preventDefault();
+
 	}
 
          function getBodyCB(fixture) {
@@ -225,8 +231,8 @@ var fllflag = false;
 	 function getFallenBody(){
 	 vec = new b2Vec2(0, 0);
 	    var aabb = new b2AABB();
-	    aabb.lowerBound.Set(0, pheight + 1);
-	    aabb.upperBound.Set(pwidth, pheight + 1);
+	    aabb.lowerBound.Set(-pwidth, pheight + 1);
+	    aabb.upperBound.Set(2*pwidth, pheight + 1);
 	    
             selectedBody = null;
             world.QueryAABB(getBodyAABB, aabb);
