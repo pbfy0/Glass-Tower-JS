@@ -21,7 +21,12 @@
     </span>
     Reverse: <input id="reverse" type="checkbox" onchange="loadLevel(l)" />
   </body>
-  <script type="text/javascript" src="Box2dWeb-2.1a.min.2.js"></script>
+  <!--[if lt IE 9]>
+	  <script type="text/javascript" src="Box2dWeb-IE8.js"></script>
+  <![endif]-->
+  <![if gte IE 9]>
+	<script type="text/javascript" src="Box2dWeb-2.1a.min.2.js"></script>
+  <![endif]>
   <script type="text/javascript" src="box2dMods.js"></script>
   <script type="text/javascript" src="levelset.js"></script>
   <script type="text/javascript" src="glassTower.js"></script>
