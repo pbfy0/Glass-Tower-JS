@@ -56,6 +56,7 @@ pheight = height/scale;
 	debugDraw.SetSprite(document.getElementById("canvas").getContext("2d"));
 	debugDraw.SetDrawScale(scale);
 	debugDraw.SetFillAlpha(1);
+	debugDraw.SetAlpha(1);
 	debugDraw.SetLineThickness(1.0);
 //	debugDraw.SetLineColor(rgb(0, 0, 0));
 	debugDraw.SetFlags(b2DebugDraw.e_shapeBit/* | b2DebugDraw.e_jointBit*/);
@@ -86,16 +87,18 @@ function XOR(a, b){
          fixDef.restitution = 0.2;
          
          var bodyDef = new b2BodyDef;
-	 function cbox(cc, xc, yc, wc, hc){
+	 function cbox(cc, occ, xc, yc, wc, hc){
 		wc = (wc) ? wc : 1;
 		hc = (hc) ? hc : 1;
-	 	return {x:xc,y:yc,w:wc,h:hc,c:cc};
+	 	return {x:xc,y:yc,w:wc,h:hc,c:cc,oc:occ};
 	 }
 	 function rgb(rc, gc, bc){
 		return {r:rc,g:gc,b:bc};
 	 }
 	 var blue = rgb(0, 112, 0);
 	 var red = rgb(255, 253, 208);
+	 var outline = rgb(1, 68, 33);
+//	 var outline = rgb(255, 255, 255);
 	 var cwidth = 0, cpos, diff;
 	 var blcnt = 0;
 	 function shp(a){
@@ -107,7 +110,7 @@ function XOR(a, b){
 		var o = [];
 		for(i in a){
 			var c = XOR(reversed, a[i][0]);
-			o.push(cbox(c ? blue : red, a[i][1] + width/(scale*2), a[i][2]+0.5, a[i][3], a[i][4]));
+			o.push(cbox(c ? blue : red, outline, a[i][1] + width/(scale*2), a[i][2]+0.5, a[i][3], a[i][4]));
 //			if(reversed){a[i][0] = !a[i][0]}
 			blcnt += c ? 1 : 0;
 		}
@@ -135,7 +138,7 @@ function shapes(){
             bodyDef.position.y = diff-cp.y;
             var body = world.CreateBody(bodyDef);
 	    var fixture = body.CreateFixture(fixDef);
-	    fixture.SetUserData({color : cp.c, area : cp.w*cp.h});
+	    fixture.SetUserData({color : cp.c, area : cp.w*cp.h, outlineColor : cp.oc});
          }
          };
          //setup debug draw

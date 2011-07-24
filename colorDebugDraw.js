@@ -5,6 +5,8 @@ var
   b2Body = Box2D.Dynamics.b2Body, 
   b2DebugDraw = Box2D.Dynamics.b2DebugDraw, 
   b2Color = Box2D.Common.b2Color;
+  b2Shape = Box2D.Collision.Shapes.b2Shape;
+  b2Math = Box2D.Common.Math.b2Math;
    Box2D.Dynamics.b2World.prototype.DrawDebugData = function () {
       if (this.m_debugDraw == null) {
          return;
@@ -26,6 +28,7 @@ var
       var b2 = new b2AABB();
       var vs = [new b2Vec2(), new b2Vec2(), new b2Vec2(), new b2Vec2()];
       var color = new b2Color(0, 0, 0);
+      var outlineColor = undefined;
       if (flags & b2DebugDraw.e_shapeBit) {
          for (b = this.m_bodyList;
          b; b = b.m_next) {
@@ -34,6 +37,17 @@ var
             f; f = f.m_next) {
                s = f.GetShape();
 	       ud = f.GetUserData();
+	       if(ud !== null){
+		if(ud.outlineColor !== undefined){
+		 outlineColor = new b2Color();
+		 col = ud.outlineColor;
+		 outlineColor.Set(col.r/255, col.g/255, col.b/255);
+//		 ud.outlineColor;
+		}
+		if(ud.color === undefined){
+		 ud = null;
+		}
+	       }
 	       if(ud !== null){
 		if(ud.color !== undefined){
 	         col = ud.color;
@@ -60,7 +74,7 @@ var
                   color.Set(0.9, 0.7, 0.7);
 //                  this.DrawShape(s, xf, color);
                }
-                  this.DrawShape(s, xf, color);
+                  this.DrawShape(s, xf, color, outlineColor);
             }
          }
       }
@@ -114,19 +128,48 @@ var
          }
       }
    }
-/*   b2DebugDraw.prototype.SetLineColor = function (lineColor) {
-      if (lineColor === undefined) lineColor = 0;
-      this.m_lineColor = lineColor;
-      this.m_ctx.strokeStyle = "rgb(" + lineColor.r + ", " + lineColor.g + ", " + lineColor.b + ")";
-   };*/
-   b2DebugDraw.prototype.DrawSolidPolygon = function (vertices, vertexCount, color) {
+
+   Box2D.Dynamics.b2World.prototype.DrawShape = function (shape, xf, color, outlineColor) {
+      switch (shape.m_type) {
+      case b2Shape.e_circleShape:
+         {
+            var circle = ((shape instanceof b2CircleShape ? shape : null));
+            var center = b2Math.MulX(xf, circle.m_p);
+            var radius = circle.m_radius;
+            var axis = xf.R.col1;
+            this.m_debugDraw.DrawSolidCircle(center, radius, axis, color);
+         }
+         break;
+      case b2Shape.e_polygonShape:
+         {
+            var i = 0;
+            var poly = ((shape instanceof b2PolygonShape ? shape : null));
+            var vertexCount = parseInt(poly.GetVertexCount());
+            var localVertices = poly.GetVertices();
+            var vertices = new Vector(vertexCount);
+            for (i = 0;
+            i < vertexCount; ++i) {
+               vertices[i] = b2Math.MulX(xf, localVertices[i]);
+            }
+            this.m_debugDraw.DrawSolidPolygon(vertices, vertexCount, color, outlineColor);
+         }
+         break;
+      case b2Shape.e_edgeShape:
+         {
+            var edge = (shape instanceof b2EdgeShape ? shape : null);
+            this.m_debugDraw.DrawSegment(b2Math.MulX(xf, edge.GetVertex1()), b2Math.MulX(xf, edge.GetVertex2()), color);
+         }
+         break;
+      }
+   }
+
+   b2DebugDraw.prototype.DrawSolidPolygon = function (vertices, vertexCount, color, outlineColor) {
       if(!vertexCount) return;
       var s = this.m_ctx;
       var drawScale = this.m_drawScale;
       s.beginPath();
-      var sc = new b2Color();
-      sc.Set(1/255, 68/255, 33/255);
-      s.strokeStyle = this._color(sc.color, this.m_alpha);
+      if(outlineColor === undefined){outlineColor = color}
+      s.strokeStyle = this._color(outlineColor.color, this.m_alpha);
       s.fillStyle = this._color(color.color, this.m_fillAlpha);
       s.moveTo(vertices[0].x * drawScale, vertices[0].y * drawScale);
       for (var i = 1; i < vertexCount; i++) {
