@@ -1,4 +1,4 @@
-// thanks to Mike Koenig for the glass breaking sound, from http://soundbible.com/105-Light-Bulb-Breaking.html
+// thanks to Mike Koenig for the glass breaking sounds, from http://soundbible.com/105-Light-Bulb-Breaking.html and http://soundbible.com/994-Mirror-Shattering.html
 
 var delstack = [];
          var   b2Vec2 = Box2D.Common.Math.b2Vec2
@@ -19,8 +19,10 @@ var pos;
 var scale;
 var smashcount = 0;
 function smash(){
-	var csmash = soundManager.createSound({id: "smash" + smashcount, url: "smash.ogg"});
+	var st = Math.round(Math.random()) + 1;
+	var csmash = soundManager.createSound({id: "smash" + smashcount, url: "smash" + st + ".ogg"});
 	csmash.play();
+	smashcount++;
 }
 function levelselect(){
 	var i, o = "";
