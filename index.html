@@ -1,28 +1,28 @@
 <html>
-   <head>
-      <title>Glass Tower JS</title>
-	<!--[if lt IE 9]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
-<!-- include SM2 library -->
-<script type="text/javascript" src="sm2.js"></script>
+  <head>
+    <title>Glass Tower JS</title>
+    <!--[if lt IE 9]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
+    <!-- include SM2 library -->
+    <script type="text/javascript" src="sm2.js"></script>
 
-<!-- configure it for your use -->
-<script type="text/javascript">
-soundManager.url = 'sm2swf/';
-soundManager.useHTML5Audio = true;
-soundManager.useFlashBlock = false;
-</script>
-   </head>
-   <body onload="init();">
-      <canvas id="canvas" width="200" height="500" style="background-color:#0087bd;" ></canvas>
-	<br />
-	<div style="position:absolute; top:10px; left:10px; color:#fff;" id="points">0</div>
-	<span id="levels" >
-	<!--style="position:absolute; top:10px; left:10px; width:200px; height:500px"-->
-	</span>
-	Reverse: <input id="reverse" type="checkbox" onchange="loadLevel(l)" />
-   </body>
-   <script type="text/javascript" src="Box2dWeb-2.1a.min.2.js"></script>
-   <script type="text/javascript" src="colorDebugDraw.js"></script>
-   <script type="text/javascript" src="levelset.js"></script>
-   <script type="text/javascript" src="glassTower.js"></script>
+    <!-- configure it for your use -->
+    <script type="text/javascript">
+      soundManager.url = 'sm2swf/';
+      soundManager.useHTML5Audio = true;
+      soundManager.useFlashBlock = false;
+    </script>
+  </head>
+  <body onload="init();">
+    <canvas id="canvas" width="200" height="500" style="background-color:#0087bd;" ></canvas>
+    <br />
+    <div style="position:absolute; top:10px; left:10px; color:#fff;" id="points">0</div>
+    <span id="levels" >
+      <!--style="position:absolute; top:10px; left:10px; width:200px; height:500px"-->
+    </span>
+    Reverse: <input id="reverse" type="checkbox" onchange="loadLevel(l)" />
+  </body>
+  <script type="text/javascript" src="Box2dWeb-2.1a.min.2.js"></script>
+  <script type="text/javascript" src="box2dMods.js"></script>
+  <script type="text/javascript" src="levelset.js"></script>
+  <script type="text/javascript" src="glassTower.js"></script>
 </html>
