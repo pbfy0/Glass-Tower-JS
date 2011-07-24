@@ -1,3 +1,5 @@
+// thanks to Mike Koenig for the glass breaking sound, from http://soundbible.com/105-Light-Bulb-Breaking.html
+
 var delstack = [];
          var   b2Vec2 = Box2D.Common.Math.b2Vec2
             ,  b2AABB = Box2D.Collision.b2AABB
@@ -15,6 +17,11 @@ var delstack = [];
 var pel;
 var pos;
 var scale;
+var smashcount = 0;
+function smash(){
+	var csmash = soundManager.createSound({id: "smash" + smashcount, url: "smash.ogg"});
+	csmash.play();
+}
 function levelselect(){
 	var i, o = "";
 	for(i in levelset){
@@ -46,9 +53,10 @@ pheight = height/scale;
 	 var debugDraw = new b2DebugDraw();
 	debugDraw.SetSprite(document.getElementById("canvas").getContext("2d"));
 	debugDraw.SetDrawScale(scale);
-	debugDraw.SetFillAlpha(0.6);
+	debugDraw.SetFillAlpha(1);
 	debugDraw.SetLineThickness(1.0);
-	debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
+//	debugDraw.SetLineColor(rgb(0, 0, 0));
+	debugDraw.SetFlags(b2DebugDraw.e_shapeBit/* | b2DebugDraw.e_jointBit*/);
 	world.SetDebugDraw(debugDraw);
          window.setInterval(update, 1000 / fps);
          pel = document.getElementById("points");
@@ -84,8 +92,8 @@ function XOR(a, b){
 	 function rgb(rc, gc, bc){
 		return {r:rc,g:gc,b:bc};
 	 }
-	 var blue = rgb(0, 255, 0);
-	 var red = rgb(255, 0, 255);
+	 var blue = rgb(0, 112, 0);
+	 var red = rgb(255, 253, 208);
 	 var cwidth = 0, cpos, diff;
 	 var blcnt = 0;
 	 function shp(a){
@@ -278,6 +286,7 @@ var d = new Date();
                   body.SetAwake(true);
 		  var fix = body.GetFixtureList();
 		  points += computePoints(fix);
+		  smash();
 		  _deleteFixture(fix);
                }
 		isMouseDown = false;
@@ -288,6 +297,7 @@ var d = new Date();
 		  fbody.SetAwake(true);
 		  var fix = fbody.GetFixtureList();
 		  points += computePoints(fix);
+		  smash();
 		  _deleteFixture(fix);
 		}
             

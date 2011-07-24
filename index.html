@@ -2,9 +2,18 @@
    <head>
       <title>Glass Tower JS</title>
 	<!--[if lt IE 9]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
+<!-- include SM2 library -->
+<script type="text/javascript" src="sm2/script/soundmanager2.js"></script>
+
+<!-- configure it for your use -->
+<script type="text/javascript">
+soundManager.url = 'sm2/swf/';
+soundManager.useHTML5Audio = true;
+soundManager.useFlashBlock = false;
+</script>
    </head>
    <body onload="init();">
-      <canvas id="canvas" width="200" height="500" style="background-color:#333333;" ></canvas>
+      <canvas id="canvas" width="200" height="500" style="background-color:#0087bd;" ></canvas>
 	<br />
 	<div style="position:absolute; top:10px; left:10px; color:#fff;" id="points">0</div>
 	<span id="levels" >

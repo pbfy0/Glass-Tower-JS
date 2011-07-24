@@ -114,4 +114,28 @@ var
          }
       }
    }
+/*   b2DebugDraw.prototype.SetLineColor = function (lineColor) {
+      if (lineColor === undefined) lineColor = 0;
+      this.m_lineColor = lineColor;
+      this.m_ctx.strokeStyle = "rgb(" + lineColor.r + ", " + lineColor.g + ", " + lineColor.b + ")";
+   };*/
+   b2DebugDraw.prototype.DrawSolidPolygon = function (vertices, vertexCount, color) {
+      if(!vertexCount) return;
+      var s = this.m_ctx;
+      var drawScale = this.m_drawScale;
+      s.beginPath();
+      var sc = new b2Color();
+      sc.Set(1/255, 68/255, 33/255);
+      s.strokeStyle = this._color(sc.color, this.m_alpha);
+      s.fillStyle = this._color(color.color, this.m_fillAlpha);
+      s.moveTo(vertices[0].x * drawScale, vertices[0].y * drawScale);
+      for (var i = 1; i < vertexCount; i++) {
+         s.lineTo(vertices[i].x * drawScale, vertices[i].y * drawScale);
+      }
+      s.lineTo(vertices[0].x * drawScale, vertices[0].y * drawScale);
+      s.closePath();
+      s.fill();
+      s.stroke();
+   };
+
 })();
