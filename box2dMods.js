@@ -38,20 +38,15 @@
 		    s = f.GetShape();
 		    ud = f.GetUserData();
 		    if(ud !== null){
+			if(ud.color !== undefined){
+			    col = ud.color;
+			    color.Set(col.r/255, col.g/255, col.b/255);
+			}
 			if(ud.outlineColor !== undefined){
 			    outlineColor = new b2Color();
 			    col = ud.outlineColor;
 			    outlineColor.Set(col.r/255, col.g/255, col.b/255);
 			    //		 ud.outlineColor;
-			}
-			if(ud.color === undefined){
-			    ud = null;
-			}
-		    }
-		    if(ud !== null){
-			if(ud.color !== undefined){
-			    col = ud.color;
-			    color.Set(col.r/255, col.g/255, col.b/255);
 			}
 		    }
 		    else if (b.IsActive() == false) {
