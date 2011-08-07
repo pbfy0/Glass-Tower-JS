@@ -18,11 +18,15 @@ var pel;
 var pos;
 var scale;
 var smashcount = 0;
+var over = false;
 function smash(){
     var st = Math.round(Math.random()) + 1;
-    var csmash = soundManager.createSound({id: "smash" + smashcount, url: "smash" + st + ".ogg"});
-    csmash.play();
-    smashcount++;
+//    var csmash = soundManager.createSound({id: "smash" + smashcount, url: "smash" + st + ".ogg"});
+//    csmash.play();
+//    smashcount++;
+      var a = new Audio();
+      a.src = "smash" + st + ".ogg";
+      a.play();
 }
 function levelselect(){
     var i, o = "";
@@ -67,8 +71,8 @@ function init() {
 
 var l = 0;
 var inp = levelset[l];
-var points = 0;
-
+var totalPoints = 0;
+var levelPoints = 0;
 var fps = 30;
 
 
@@ -206,8 +210,7 @@ function getBodyAABB(fixture) {
 }
 var fllflag = false;
 function loadLevel(level){
-    var fixtures = getAllFixtures();
-    delstack = fixtures;
+    deleteAll();
     blcnt = 0;
     l = level;
     inp = levelset[l];
@@ -221,9 +224,21 @@ function loadLevel(level){
 	return false;
     }
 }
+function deleteAll(){
+    var fixtures = getAllFixtures();
+    delstack = fixtures;
+}
 function nextLevel(){
-    l++;
-    loadLevel(l);
+    totalPoints += levelPoints;
+    levelPoints = 0;
+    if(l + 1 < levelset.length){
+	alert("Level Complete.\n\nTotal score: " + totalPoints);
+	loadLevel(l + 1);
+    }else{
+	deleteAll();
+	alert("You win.\n\nTotal score: " + totalPoints);
+	over = true;
+    }
 }
 function getABHelper(fixture){
     selectedFixtures.push(fixture);
@@ -282,33 +297,30 @@ function _deleteFixture(fix){
     body.SetAwake(true);
     body.DestroyFixture(fix);
 }
-
+function handleSmash(body){
+        body.SetAwake(true);
+	var fix = body.GetFixtureList();
+	levelPoints += computePoints(fix);
+	smash();
+	_deleteFixture(fix);
+}
 function update() {
     var d = new Date();
     if(isMouseDown) {
         var body = getBodyAtMouse();
         if(body) {
-            body.SetAwake(true);
-	    var fix = body.GetFixtureList();
-	    points += computePoints(fix);
-	    smash();
-	    _deleteFixture(fix);
+            handleSmash(body);
         }
 	isMouseDown = false;
 
     }
     var fbody = getFallenBody();
     if(fbody){
-	fbody.SetAwake(true);
-	var fix = fbody.GetFixtureList();
-	points += computePoints(fix);
-	smash();
-	_deleteFixture(fix);
+	handleSmash(fbody);
     }
     
-    pel.innerHTML = points;
-    if(blcnt == 0){
-	//		alert("You win!\n Points: " + points);
+    pel.innerHTML = levelPoints;
+    if(blcnt == 0 && !over){
 	nextLevel();
     }
     if(delstack.length > 0 && lock==false){
